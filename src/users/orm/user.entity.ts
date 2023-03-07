@@ -3,10 +3,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { Client } from 'src/clients/orm/client.entity';
 
 @Entity()
 export class User extends BaseEntity {
@@ -27,6 +29,11 @@ export class User extends BaseEntity {
 
   @Column({ select: false })
   salt: string;
+
+  @OneToMany(() => Client, (client) => client.creator, {
+    eager: true,
+  })
+  createdClients: Client[];
 
   async validatePassword(password: string): Promise<boolean> {
     const hash = await bcrypt.hash(password, this.salt);

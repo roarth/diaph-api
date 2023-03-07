@@ -1,8 +1,10 @@
+import { User } from 'src/users/orm/user.entity';
 import {
   BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -20,4 +22,12 @@ export class Client extends BaseEntity {
 
   @Column()
   name: string;
+
+  @ManyToOne(() => User, (user) => user.createdClients, {
+    eager: false,
+  })
+  creator: User;
+
+  @Column()
+  creatorId: string;
 }

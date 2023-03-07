@@ -4,6 +4,7 @@ import { CustomRepository } from 'src/config/orm/typeorm-ex.decorator';
 import { Client } from './client.entity';
 import { GetClientsFilterDto } from '../dto/get-clients-filter.dto';
 import { CreateClientDto } from '../dto/create-client.dto';
+import { User } from 'src/users/orm/user.entity';
 
 @CustomRepository(Client)
 export class ClientRepository extends Repository<Client> {
@@ -33,14 +34,18 @@ export class ClientRepository extends Repository<Client> {
     }
   }
 
-  async createClient(createClientDto: CreateClientDto): Promise<Client> {
+  async createClient(
+    createClientDto: CreateClientDto,
+    user: User,
+  ): Promise<Client> {
     const client = new Client();
     const { name } = createClientDto;
     client.name = name;
+    client.creator = user;
 
     try {
       await client.save();
-
+      delete client.creator;
       this.logger.verbose(`Created the Client w/ id: ${client.id}`);
 
       return client;

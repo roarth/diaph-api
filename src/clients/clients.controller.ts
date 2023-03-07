@@ -10,6 +10,8 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { GetUser } from 'src/common/decorators/get-user.decorator';
+import { User } from 'src/users/orm/user.entity';
 import { ClientsService } from './clients.service';
 import { CreateClientDto } from './dto/create-client.dto';
 import { GetClientsFilterDto } from './dto/get-clients-filter.dto';
@@ -33,7 +35,10 @@ export class ClientsController {
 
   @Post()
   @UsePipes(ValidationPipe)
-  createClient(@Body() createClientDto: CreateClientDto): Promise<Client> {
-    return this.clientsService.createClient(createClientDto);
+  createClient(
+    @Body() createClientDto: CreateClientDto,
+    @GetUser() user: User,
+  ): Promise<Client> {
+    return this.clientsService.createClient(createClientDto, user);
   }
 }

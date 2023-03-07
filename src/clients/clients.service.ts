@@ -1,5 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { User } from 'src/users/orm/user.entity';
 import { CreateClientDto } from './dto/create-client.dto';
 import { GetClientsFilterDto } from './dto/get-clients-filter.dto';
 import { Client } from './orm/client.entity';
@@ -17,7 +18,10 @@ export class ClientsService {
     return this.clientRepository.getClients(filterDto);
   }
 
-  async createClient(createClientDto: CreateClientDto): Promise<Client> {
-    return this.clientRepository.createClient(createClientDto);
+  async createClient(
+    createClientDto: CreateClientDto,
+    user: User,
+  ): Promise<Client> {
+    return this.clientRepository.createClient(createClientDto, user);
   }
 }
