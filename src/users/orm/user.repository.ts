@@ -2,7 +2,6 @@ import {
   ConflictException,
   InternalServerErrorException,
   Logger,
-  UnauthorizedException,
 } from '@nestjs/common';
 import { AuthCredentialsDto } from 'src/auth/dto/auth-credentials.dto';
 import { Repository } from 'typeorm';
@@ -31,7 +30,7 @@ export class UserRepository extends Repository<User> {
       };
     } catch (error) {
       if (error.code === '23505') {
-        throw new ConflictException('Username/Email already exists');
+        throw new ConflictException('Email already exists');
       } else {
         throw new InternalServerErrorException();
       }
@@ -48,15 +47,6 @@ export class UserRepository extends Repository<User> {
     });
 
     if (user && (await user.validatePassword(password))) {
-      if (user) {
-        this.logger.debug(
-          `Failed login attempt for inactive user w/ id: "${user.id}".`,
-        );
-        throw new UnauthorizedException(
-          `Your account is not active for now. Check the email in your inbox`,
-        );
-      }
-
       return { email: user.email };
     } else {
       return null;
