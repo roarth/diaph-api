@@ -8,11 +8,11 @@ import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
-    ClientsModule,
-    UsersModule,
     TypeOrmModule.forRootAsync(typeOrmConfigAsync),
     TypeOrmExModule.forCustomRepository([]),
     AuthModule,
+    ClientsModule,
+    UsersModule,
   ],
   controllers: [],
   providers: [],
