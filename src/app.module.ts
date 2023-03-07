@@ -6,6 +6,7 @@ import { typeOrmConfigAsync } from './config/typeorm.config';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { CommonModule } from './common/common.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { ConfigModule } from '@nestjs/config';
     AuthModule,
     ClientsModule,
     UsersModule,
+    CommonModule,
   ],
   controllers: [],
   providers: [],
