@@ -4,10 +4,8 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 RUN npm i -g pnpm
-RUN pnpm install --only=development
-
+RUN pnpm install 
 COPY . .
-
 RUN pnpm run build
 
 FROM node:14.6-alpine as production
@@ -20,7 +18,7 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 RUN npm i -g pnpm
-RUN pnpm install --only=production
+RUN pnpm install 
 
 COPY . .
 
