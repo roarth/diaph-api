@@ -3,6 +3,7 @@ import { Repository } from 'typeorm';
 import { CustomRepository } from 'src/config/orm/typeorm-ex.decorator';
 import { Client } from './client.entity';
 import { GetClientsFilterDto } from '../dto/get-clients-filter.dto';
+import { CreateClientDto } from '../dto/create-client.dto';
 
 @CustomRepository(Client)
 export class ClientRepository extends Repository<Client> {
@@ -29,6 +30,22 @@ export class ClientRepository extends Repository<Client> {
         error.stack,
       );
       throw new InternalServerErrorException();
+    }
+  }
+
+  async createClient(createClientDto: CreateClientDto): Promise<Client> {
+    const client = new Client();
+    const { name } = createClientDto;
+    client.name = name;
+
+    try {
+      await client.save();
+
+      this.logger.verbose(`Created the Client w/ id: ${client.id}`);
+
+      return client;
+    } catch (error) {
+      this.logger.error(error.stack);
     }
   }
 }
