@@ -1,10 +1,10 @@
 import { InternalServerErrorException, Logger } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { CustomRepository } from 'src/config/orm/typeorm-ex.decorator';
+import { CustomRepository } from '../../../src/config/orm/typeorm-ex.decorator';
 import { Client } from './client.entity';
-import { GetClientsFilterDto } from '../dto/get-clients-filter.dto';
+import { User } from '../../../src/users/orm/user.entity';
 import { CreateClientDto } from '../dto/create-client.dto';
-import { User } from 'src/users/orm/user.entity';
+import { GetClientsFilterDto } from '../dto/get-clients-filter.dto';
 
 @CustomRepository(Client)
 export class ClientRepository extends Repository<Client> {

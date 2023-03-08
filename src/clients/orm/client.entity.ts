@@ -1,4 +1,4 @@
-import { User } from 'src/users/orm/user.entity';
+import { User } from '../../../src/users/orm/user.entity';
 import {
   BaseEntity,
   Column,
