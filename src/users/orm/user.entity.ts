@@ -8,7 +8,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { Client } from '../../../src/clients/orm/client.entity';
+import { Client } from 'src/clients/orm/client.entity';
 
 @Entity()
 export class User extends BaseEntity {
